@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>석 달 목표 (Three-Month Goals) - 100% 로컬 워크스페이스</title>
+    <!-- Tailwind CSS for rich modern visuals -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+        }
+        .modal-active {
+            overflow: hidden;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-[#F8F9FA] text-[#1D1C1D] min-h-screen flex flex-col selection:bg-[#2BAC76] selection:text-white">
+
+    <!-- Header Navigation -->
+    <nav class="border-b border-[#DFE1E5] bg-white sticky top-0 z-30 transition-all duration-300 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-tr from-[#2BAC76] to-teal-500 rounded-xl flex items-center justify-center shadow-md">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="font-extrabold text-[#2BAC76] text-lg block sm:inline">석 달 목표</span>
+                        <span class="text-xs text-[#616061] ml-1 block sm:inline">Three-Month Goals Dashboard</span>
+                    </div>
+                </div>
+
+                <!-- Web Local Action Buttons -->
+                <div class="flex items-center space-x-3">
+                    <button id="openSettingsBtn" onclick="toggleModal(true)" class="flex items-center px-4 py-2 bg-[#2BAC76] hover:bg-[#20835B] text-white rounded-xl font-bold text-sm shadow-sm transition-all duration-150">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path>
+                        </svg>
+                        <span>데이터 백업 및 다운로드</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Workspace Container -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+        <!-- Toast Notification Panel -->
+        <div id="toast" class="hidden fixed bottom-6 right-6 z-50 transform translate-y-2 opacity-0 transition-all duration-300 flex items-center p-4 rounded-xl shadow-2xl bg-white border border-[#DFE1E5] min-w-[320px]">
+            <div id="toastIcon" class="w-8 h-8 rounded-lg flex items-center justify-center mr-3 bg-emerald-50 text-emerald-600">
+                <!-- icon dynamically set -->
+            </div>
+            <div>
+                <h4 id="toastTitle" class="font-bold text-sm text-slate-800">알림</h4>
+                <p id="toastMessage" class="text-xs text-slate-600 mt-0.5">상세 메세지가 여기에 표시됩니다.</p>
+            </div>
+        </div>
+
+        <!-- Local Backup Action Banner -->
+        <div id="infoBanner" class="mb-6 p-4 rounded-xl bg-blue-50 border border-blue-200 flex items-start space-x-3 shadow-sm">
+            <div class="p-2 bg-blue-100 rounded-lg shrink-0">
+                <svg class="w-5 h-5 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </div>
+            <div class="flex-grow">
+                <h3 class="font-bold text-blue-900 text-sm">🔒 100% 로컬 프라이버시 오프라인 워크스페이스입니다</h3>
+                <p class="text-xs text-blue-800 mt-1">이 서비스는 어떠한 외부 연동 서버나 구글 데이터 추적 트래커로 작성 기록을 전송하지 않으며, 모든 마일스톤 및 수행기록은 본인 브라우저의 전용 안전 영역(Local Storage)에 100% 로컬 프라이버시가 존중되는 환경으로 보관됩니다. 기기를 교체하고 싶으시거나 데이터를 보존하시려면 우측의 <strong class="text-[#2BAC76] hover:underline cursor-pointer font-bold" onclick="toggleModal(true)">[데이터 백업 및 다운로드]</strong> 메뉴를 적극 이용하세요.</p>
+            </div>
+        </div>
+
+        <!-- Interactive Header Control: Date Picker / Active day switcher -->
+        <div class="mb-8 p-6 bg-white border border-[#DFE1E5] rounded-3xl flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm">
+            <div class="flex items-center space-x-4">
+                <div class="p-3 bg-emerald-50 text-emerald-600 rounded-2xl border border-emerald-100">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-slate-800 flex items-center">
+                        📅 목표 실행 날짜 관측기
+                    </h2>
+                    <p class="text-xs text-[#616061] mt-1">원하시는 날짜를 클릭하여 넘기며 매일의 행동규칙 수행상태를 실시간 관리하세요!</p>
+                </div>
+            </div>
+
+            <!-- Switcher controls -->
+            <div class="flex items-center space-x-2">
+                <button onclick="changeActiveDate(-1)" class="p-2.5 bg-white border border-[#DFE1E5] hover:border-slate-350 hover:bg-[#F8F9FA] text-[#1D1C1D] rounded-xl transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                </button>
+                <div class="px-4 py-2 bg-white border border-[#DFE1E5] rounded-xl flex items-center space-x-2 min-w-[140px] justify-center">
+                    <input type="date" id="selectedDatePicker" onchange="setDateFromPicker(this.value)" class="bg-transparent text-slate-800 text-sm font-bold focus:outline-none cursor-pointer">
+                </div>
+                <button onclick="changeActiveDate(1)" class="p-2.5 bg-white border border-[#DFE1E5] hover:border-slate-355 hover:bg-[#F8F9FA] text-[#1D1C1D] rounded-xl transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+                <button onclick="setToToday()" class="px-3.5 py-2.5 bg-emerald-50 hover:bg-emerald-100 border border-emerald-100 text-emerald-700 font-bold text-xs rounded-xl transition">
+                    오늘로
+                </button>
+            </div>
+        </div>
+
+        <!-- Dashboard Layout Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Left Side: Goals & Sub-goals List -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Inner progress status line -->
+                <div class="bg-white border border-[#DFE1E5] rounded-2xl p-5 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <h4 class="text-xs font-bold text-[#616061] tracking-wider uppercase">🚀 석 달 스케줄러 타임라인</h4>
+                        <h3 class="text-base font-black text-slate-800 mt-1" id="timelineProgressHeading font-bold">Day ... / 90일차</h3>
+                    </div>
+                    <!-- Combined state progression -->
+                    <div class="flex-grow max-w-sm">
+                        <div class="flex justify-between text-[11px] mb-1">
+                            <span class="text-[#616061]" id="timelineStartDateText">시작: -</span>
+                            <span class="text-[#2BAC76] font-bold" id="timelinePercentText">0% 완료</span>
+                        </div>
+                        <div class="w-full bg-[#E2E8F0] h-2.5 rounded-full overflow-hidden">
+                            <div class="bg-[#2BAC76] h-full rounded-full transition-all duration-300" id="timelineProgressBar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between pt-2">
+                    <div>
+                        <h2 class="text-xl font-black text-slate-800 flex items-center">
+                            🎯 나의 3개월 핵심 마일스톤 관리
+                        </h2>
+                        <p class="text-xs text-[#616061] mt-1">각 핵심 행동 수칙을 수행할 때마다 체크하면, 색깔별 90일 잔디밭 정원에 실시간 안개가 가득 물들게 됩니다.</p>
+                    </div>
+                    <button onclick="openAddGoalModal()" class="flex items-center space-x-1.5 px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 rounded-xl text-emerald-700 font-bold text-xs shadow-sm transition">
+                        <span>➕ 목표 추가</span>
+                    </button>
+                </div>
+
+                <!-- Dynamic Goals Cards Grid -->
+                <div class="grid grid-cols-1 gap-6" id="goalsListContainer">
+                    <!-- Dynamic client-side contents injected by Javascript -->
+                </div>
+            </div>
+
+            <!-- Right Side: Export & Local Repositories / Live stats preview -->
+            <div class="space-y-6">
+                <!-- Storage actions panel -->
+                <div class="p-6 bg-white border border-[#DFE1E5] rounded-3xl shadow-sm">
+                    <h3 class="font-extrabold text-[#1D1C1D] text-md flex items-center mb-4">
+                        <span class="w-2.5 h-2.5 rounded-full bg-[#2BAC76] mr-2.5 inline-block"></span>
+                        내 데이터 관리 도구
+                    </h3>
+                    
+                    <div class="space-y-2.5">
+                        <button onclick="downloadGoalsCsv()" class="w-full py-2.5 text-center text-xs font-bold rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-150 hover:border-emerald-200 transition text-[#2BAC76] flex items-center justify-center space-x-2">
+                            <span>🎯 90일 핵심목표 CSV 다운로드</span>
+                        </button>
+                        <button onclick="downloadSubGoalsCsv()" class="w-full py-2.5 text-center text-xs font-bold rounded-xl bg-blue-50 hover:bg-blue-100 border border-blue-150 hover:border-blue-200 transition text-blue-600 flex items-center justify-center space-x-2">
+                            <span>🌱 세부 행동규칙 CSV 다운로드</span>
+                        </button>
+                        <button onclick="downloadDailyRecordsCsv()" class="w-full py-2.5 text-center text-xs font-bold rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-150 hover:border-amber-200 transition text-amber-600 flex items-center justify-center space-x-2">
+                            <span>📅 잔디밭 실천로그 CSV 다운로드</span>
+                        </button>
+                    </div>
+
+                    <div class="border-t border-[#DFE1E5] pt-4 mt-5 space-y-3">
+                        <button onclick="toggleModal(true)" class="w-full py-2.5 text-center text-xs font-semibold rounded-xl bg-violet-50 hover:bg-violet-100 border border-violet-100 text-violet-700 hover:text-violet-800 transition-all duration-150 flex items-center justify-center space-x-1 cursor-pointer">
+                            <span>📦 JSON 백업 & 데이터 복원 열기</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Live Activity Feed Score Card -->
+                <div class="p-6 bg-white border border-[#DFE1E5] rounded-3xl shadow-sm space-y-4">
+                    <h3 class="font-extrabold text-[#1D1C1D] text-base">🌱 실천율 통계 대시보드</h3>
+                    
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="bg-[#F8F9FA] p-3 rounded-xl border border-[#DFE1E5] text-center">
+                            <span class="text-[10px] text-[#616061] font-medium block">누적 완수 체크 수</span>
+                            <span class="text-2xl font-black text-[#2BAC76]" id="statCompletedCount">0</span>
+                        </div>
+                        <div class="bg-[#F8F9FA] p-3 rounded-xl border border-[#DFE1E5] text-center">
+                            <span class="text-[10px] text-[#616061] font-semibold block">활성 세부 행동</span>
+                            <span class="text-2xl font-black text-teal-600" id="statActiveSubGoals">0</span>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-slate-50 border border-slate-100 rounded-2xl">
+                        <h4 class="text-xs font-bold text-slate-700 flex items-center justify-between mb-2">
+                            <span>실천 가든 영구 지수</span>
+                            <span class="text-[#2BAC76]" id="totalCompletionPercentage">0%</span>
+                        </h4>
+                        <div class="w-full bg-[#E2E8F0] h-2 rounded-full overflow-hidden">
+                            <div class="bg-gradient-to-r from-[#2BAC76] to-teal-500 h-full rounded-full transition-all duration-300" id="totalCompletionBar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Help box -->
+                <div class="p-5 bg-white border border-[#DFE1E5] rounded-3xl">
+                    <h4 class="font-semibold text-sm text-[#1D1C1D] flex items-center mb-2">
+                        <svg class="w-4 h-4 text-[#2BAC76] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        스프레드시트 엑셀 활용 팁
+                    </h4>
+                    <p class="text-xs text-[#616061] leading-relaxed font-light">
+                        다운로드한 표 형식 (CSV) 데이터를 <strong>구글 스프레드시트</strong>나 <strong>마이크로소프트 엑셀</strong>로 가져오면 (파일 -> 가져오기 / 열기), 본인만의 대시보드로 보고서 가공이나 무제한 시각화 차트를 만드실 수 있습니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-[#DFE1E5] bg-white py-6 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-xs text-slate-500">© 2026 석 달 목표 - 3 Months Accomplish Tracker (Offline-First Privacy). All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Local Backup & Restore Modal Dialog (Settings Dialog Window) -->
+    <div id="settingsModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+        <!-- Backdrop -->
+        <div onclick="toggleModal(false)" class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity duration-300"></div>
+        
+        <!-- Modal Content box -->
+        <div class="bg-white border border-[#DFE1E5] rounded-3xl w-full max-w-xl shadow-2xl relative z-10 overflow-hidden transform scale-95 opacity-0 transition-all duration-300 flex flex-col" id="modalCard">
+            
+            <!-- Modal Header -->
+            <div class="px-6 py-4 border-b border-[#DFE1E5] bg-slate-50 flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <span class="p-1.5 rounded-lg bg-[#2BAC76] text-white">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path>
+                        </svg>
+                    </span>
+                    <h3 class="font-bold text-[#1D1C1D] text-lg">데이터 보관 및 복원 관리</h3>
+                </div>
+                <!-- Close Button -->
+                <button onclick="toggleModal(false)" class="text-[#616061] hover:text-[#1D1C1D] transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Segmented Dialogue Tabs inside Modal -->
+            <div class="px-6 pt-4 bg-white">
+                <div class="flex space-x-1 bg-slate-100 p-1 rounded-xl font-medium">
+                    <button onclick="switchTab('export-csv-tab')" id="btn-export-csv-tab" class="flex-1 py-1.5 text-center text-xs font-semibold rounded-lg bg-[#2BAC76] text-white transition-all">
+                        표 형식 (CSV) 다운
+                    </button>
+                    <button onclick="switchTab('export-json-tab')" id="btn-export-json-tab" class="flex-1 py-1.5 text-center text-xs font-semibold rounded-lg text-[#616061] hover:text-[#1D1C1D] transition-all">
+                        JSON 통합백업
+                    </button>
+                    <button onclick="switchTab('import-json-tab')" id="btn-import-json-tab" class="flex-1 py-1.5 text-center text-xs font-semibold rounded-lg text-[#616061] hover:text-[#1D1C1D] transition-all">
+                        통합 데이터 복구
+                    </button>
+                </div>
+            </div>
+
+            <!-- Modal Scrollable Content Container -->
+            <div class="p-6 overflow-y-auto max-h-[380px] custom-scrollbar flex-grow space-y-4">
+                
+                <!-- Tab CONTENT 1: CSV Export -->
+                <div id="content-export-csv-tab" class="space-y-3">
+                    <p class="text-xs text-[#616061] leading-relaxed font-light">
+                        💡 각 데이터베이스 항목을 분리된 CSV 파일 형태로 즉시 내려받습니다. 이 파일들은 개인 주소나 엑셀 시트로 자유롭게 업로드하여 커스텀 통계를 매기는 등 영구 귀속할 수 있습니다.
+                    </p>
+
+                    <div class="grid grid-cols-1 gap-2 pt-2">
+                        <button onclick="downloadGoalsCsv()" class="w-full py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-150 rounded-xl text-xs font-bold transition">
+                            🎯 90일 핵심목표 CSV 다운로드
+                        </button>
+                        <button onclick="downloadSubGoalsCsv()" class="w-full py-2.5 bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-150 rounded-xl text-xs font-bold transition">
+                            🌱 세부 행동규칙 CSV 다운로드
+                        </button>
+                        <button onclick="downloadDailyRecordsCsv()" class="w-full py-2.5 bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-150 rounded-xl text-xs font-bold transition">
+                            📅 잔디밭 실천로그 CSV 다운로드
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tab CONTENT 2: JSON Backup -->
+                <div id="content-export-json-tab" class="space-y-4 hidden">
+                    <p class="text-xs text-[#616061] leading-relaxed font-light">
+                        ⚙️ 작성한 모든 정보(설정된 목표 리스트, 행동의 종류, 체크 잔디밭 누적 로그)를 규격화된 한 장의 <strong>통합 백업 JSON 파일</strong>로 원스톱 패키징합니다. 기기 이전용 보관을 완벽 보장합니다.
+                    </p>
+
+                    <div class="pt-2 flex flex-col space-y-2">
+                        <button onclick="downloadJsonBackup()" class="w-full py-3 bg-violet-600 hover:bg-violet-700 text-white text-xs font-bold rounded-xl active:scale-95 shadow-md transition-all">
+                            📦 백업용 통합 JSON 파일 받기
+                        </button>
+                        <button onclick="copyJsonToClipboard()" class="w-full py-2.5 bg-slate-50 hover:bg-slate-100 text-slate-700 border border-[#DFE1E5] text-xs font-semibold rounded-xl transition">
+                            클립보드에 통합 JSON 복사하기
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tab CONTENT 3: JSON Import -->
+                <div id="content-import-json-tab" class="space-y-4 hidden">
+                    <p class="text-xs text-rose-600 font-semibold leading-relaxed">
+                        ⚠️ 경고: 데이터를 복원하게 되면 현재 브라우저의 내부 가든 영역에 적힌 세부 사항들이 전부 삭제되고 업로드한 .json 백업본 내용으로 완전히 강제 교체됩니다. 이 과정은 실행 즉시 반영되어 복구할 수 없습니다.
+                    </p>
+
+                    <div class="pt-2 border border-dashed border-rose-200 bg-rose-50/50 rounded-2xl p-4 text-center">
+                        <label for="jsonFileInput" class="cursor-pointer block">
+                            <span class="inline-flex p-3 rounded-full bg-rose-100 text-rose-600 mb-2">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                                </svg>
+                            </span>
+                            <span class="block text-xs font-extrabold text-rose-700 hover:underline">통합 백업 .json 기기 파일 찾기</span>
+                            <span class="block text-[10px] text-slate-400 mt-1">이전에 오프라인으로 다운로드했던 백업 파일만 선택 가능합니다.</span>
+                        </label>
+                        <input type="file" id="jsonFileInput" accept=".json" onchange="handleJsonRestoreSelected(event)" class="hidden">
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="px-6 py-4 border-t border-[#DFE1E5] bg-slate-50 flex justify-end">
+                <button onclick="toggleModal(false)" class="px-4 py-2 bg-white hover:bg-slate-50 border border-[#DFE1E5] text-[#1D1C1D] font-bold text-xs rounded-xl hover:text-slate-900 transition-colors">
+                    창 닫기
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADD GOAL MODAL -->
+    <div id="addGoalModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div onclick="closeAddGoalModal()" class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"></div>
+        <div class="bg-white border border-[#DFE1E5] rounded-3xl w-full max-w-lg shadow-2xl relative z-10 p-6 space-y-4">
+            <h3 class="font-extrabold text-[#1D1C1D] text-lg">🎯 새로운 90일 핵심 마일스톤 생성</h3>
+            
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">핵심 목표 문구</label>
+                    <input type="text" id="newGoalTitle" placeholder="예: 영어 마스터 및 기술 블로그 쓰기" class="w-full bg-[#F8F9FA] border border-[#DFE1E5] rounded-xl px-4 py-2.5 text-sm text-[#1D1C1D] placeholder:text-slate-400 focus:outline-none focus:border-[#2BAC76] transition-colors">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">상세 설명 / 포부</label>
+                    <input type="text" id="newGoalDesc" placeholder="예: 매일 영단어 학습 및 1회 포스팅을 통해 스펙을 향상 시킵니다." class="w-full bg-[#F8F9FA] border border-[#DFE1E5] rounded-xl px-4 py-2.5 text-sm text-[#1D1C1D] placeholder:text-slate-400 focus:outline-none focus:border-[#2BAC76] transition-colors">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">핵심 테마 색상</label>
+                        <select id="newGoalColor" class="w-full bg-[#F8F9FA] border border-[#DFE1E5] rounded-xl px-4 py-2.5 text-sm text-slate-800 focus:outline-none focus:border-[#2BAC76]">
+                            <option value="#2BAC76" class="text-[#2BAC76] font-bold">슬랙 그린 (시그니처)</option>
+                            <option value="#1264A3" class="text-[#1264A3] font-bold">슬랙 블루</option>
+                            <option value="#ECB22E" class="text-yellow-600 font-bold">슬랙 옐로우</option>
+                            <option value="#E01E5A" class="text-rose-600 font-bold">슬랙 로즈</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">아이콘 테마</label>
+                        <select id="newGoalIcon" class="w-full bg-[#F8F9FA] border border-[#DFE1E5] rounded-xl px-4 py-2.5 text-sm text-slate-800 focus:outline-none focus:border-[#2BAC76]">
+                            <option value="Star">별 (Star)</option>
+                            <option value="TrendingUp">상승곡선 (Graph)</option>
+                            <option value="Award">메달 (Award)</option>
+                            <option value="BookOpen">도서 (Book)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex space-x-3 pt-2">
+                <button onclick="closeAddGoalModal()" class="flex-1 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition">
+                    취소
+                </button>
+                <button onclick="submitNewGoal()" class="flex-1 py-2.5 bg-[#2BAC76] hover:bg-[#1E7D54] text-white font-bold text-xs rounded-xl shadow-sm transition">
+                    목표 수립 시작
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Complete JavaScript Client Implementation -->
+    <script>
+        // Local State Management
+        let appState = {
+            goals: [],
+            subGoals: [],
+            dailyRecords: []
+        };
+
+        let selectedDate = "2026-06-02";
+
+        // Initial default state matched exactly
+        const INITIAL_STATE = {
+            goals: [
+                {
+                    id: 1,
+                    title: "영어 마스터 및 기술 블로그 쓰기",
+                    description: "3개월 동안 해외 취업을 위해 매일 리딩 및 테크 피드 작성",
+                    startDate: new Date("2026-05-30").getTime(),
+                    endDate: new Date("2026-05-30").getTime() + 90 * 24 * 60 * 60 * 1000,
+                    displayColor: "#2BAC76",
+                    iconName: "Star"
+                },
+                {
+                    id: 2,
+                    title: "러닝 10km 마라톤 완주",
+                    description: "초보자 건강 관리 및 체력 저하 극복 프로세스",
+                    startDate: new Date("2026-06-02").getTime(),
+                    endDate: new Date("2026-06-02").getTime() + 90 * 24 * 60 * 60 * 1000,
+                    displayColor: "#1264A3",
+                    iconName: "TrendingUp"
+                }
+            ],
+            subGoals: [
+                { id: 101, goalId: 1, title: "매일 영단어 10개 완벽 암기", description: "Anki 앱 활용 및 복습" },
+                { id: 102, goalId: 1, title: "주 1회 기술 블로그 업로드", description: "Medium 또는 벨로그 포스팅" },
+                { id: 201, goalId: 2, title: "매일 아침 30분 러닝하기", description: "심박수 구간 2단계로 가볍게 점진적 트레이닝" },
+                { id: 202, goalId: 2, title: "매달 누적 80km 주행 돌파", description: "나이키 런클럽 데이터 연동" }
+            ],
+            dailyRecords: [
+                { id: 1001, subGoalId: 101, date: "2026-06-01", isCompleted: true },
+                { id: 1002, subGoalId: 101, date: "2026-06-02", isCompleted: true },
+                { id: 1003, subGoalId: 102, date: "2026-06-02", isCompleted: false },
+                { id: 1004, subGoalId: 201, date: "2026-06-01", isCompleted: true },
+                { id: 1005, subGoalId: 201, date: "2026-06-02", isCompleted: false }
+            ]
+        };
+
+        // On Page Load
+        document.addEventListener("DOMContentLoaded", () => {
+            loadState();
+            initDatePicker();
+            updateUI();
+        });
+
+        // Load State from Local Storage or Defaults
+        function loadState() {
+            const raw = localStorage.getItem("milestone_tracker_state");
+            if (raw) {
+                try {
+                    appState = JSON.parse(raw);
+                    if (!appState.goals) appState.goals = [];
+                    if (!appState.subGoals) appState.subGoals = [];
+                    if (!appState.dailyRecords) appState.dailyRecords = [];
+                } catch (e) {
+                    appState = { ...INITIAL_STATE };
+                }
+            } else {
+                appState = { ...INITIAL_STATE };
+                saveState();
+            }
+        }
+
+        // Save active state to local storage
+        function saveState() {
+            localStorage.setItem("milestone_tracker_state", JSON.stringify(appState));
+        }
+
+        // Initialize picker element value
+        function initDatePicker() {
+            const dateInput = document.getElementById("selectedDatePicker");
+            dateInput.value = selectedDate;
+        }
+
+        function setToToday() {
+            const todayStr = "2026-06-02"; // Setting exact operational context today
+            setDateFromPicker(todayStr);
+        }
+
+        function setDateFromPicker(val) {
+            if (!val) return;
+            selectedDate = val;
+            document.getElementById("selectedDatePicker").value = val;
+            updateUI();
+        }
+
+        // Simple next/previous switcher action
+        function changeActiveDate(days) {
+            const currentObj = new Date(selectedDate);
+            currentObj.setDate(currentObj.getDate() + days);
+            const yyyy = currentObj.getFullYear();
+            const mm = String(currentObj.getMonth() + 1).padStart(2, '0');
+            const dd = String(currentObj.getDate()).padStart(2, '0');
+            setDateFromPicker(`${yyyy}-${mm}-${dd}`);
+        }
+
+        // Dynamic visual update
+        function updateUI() {
+            renderTimelineHeader();
+            renderGoalsList();
+            updateStatsScorecard();
+        }
+
+        function renderTimelineHeader() {
+            let earliestStart = Date.now();
+            if (appState.goals.length > 0) {
+                earliestStart = Math.min(...appState.goals.map(g => g.startDate));
+            } else {
+                earliestStart = new Date("2026-06-02").getTime();
+            }
+
+            const diffTime = new Date(selectedDate).getTime() - earliestStart;
+            let daysElapsed = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
+            if (daysElapsed < 1) daysElapsed = 1;
+            if (daysElapsed > 90) daysElapsed = 90;
+
+            const progressPercent = Math.min(100, Math.round((daysElapsed / 90) * 100));
+
+            const progressHeading = document.getElementById("timelineProgressHeading");
+            if (progressHeading) {
+                progressHeading.textContent = `Day ${daysElapsed} / 90일차`;
+                progressHeading.className = "text-base font-black text-slate-800 mt-1";
+            }
+            document.getElementById("timelineStartDateText").textContent = `프로그램 시작일: ${new Date(earliestStart).toLocaleDateString()}`;
+            document.getElementById("timelinePercentText").textContent = `${progressPercent}% 진행됨`;
+            document.getElementById("timelineProgressBar").style.width = `${progressPercent}%`;
+        }
+
+        function updateStatsScorecard() {
+            const totalCompletionCount = appState.dailyRecords.filter(r => r.isCompleted).length;
+            const subGoalsCount = appState.subGoals.length;
+            
+            document.getElementById("statCompletedCount").textContent = totalCompletionCount;
+            document.getElementById("statActiveSubGoals").textContent = subGoalsCount;
+
+            const theoreticalTotalUnits = subGoalsCount * 90;
+            const finalPercent = theoreticalTotalUnits > 0 ? Math.min(100, Math.round((totalCompletionCount / theoreticalTotalUnits) * 100)) : 0;
+            
+            document.getElementById("totalCompletionPercentage").textContent = `${finalPercent}%`;
+            document.getElementById("totalCompletionBar").style.width = `${finalPercent}%`;
+        }
+
+        // Render Goals Interactive Grid Card Block
+        function renderGoalsList() {
+            const container = document.getElementById("goalsListContainer");
+            container.innerHTML = "";
+
+            if (appState.goals.length === 0) {
+                container.innerHTML = `
+                    <div class="bg-white border border-[#DFE1E5] rounded-3xl p-8 text-center shadow-sm">
+                        <p class="text-slate-500 font-bold">수립된 90일 마일스톤 목표가 없습니다.</p>
+                        <p class="text-xs text-slate-400 mt-2">우측 상단 [+ 목표 추가] 버튼을 클릭해 3개월 목표 설정을 해보세요!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            appState.goals.forEach((goal) => {
+                const subgoalsList = appState.subGoals.filter(sg => sg.goalId === goal.id);
+
+                const card = document.createElement("div");
+                card.className = "bg-white border border-[#DFE1E5] rounded-2xl p-6 hover:border-slate-300 transition shadow-sm relative group overflow-hidden";
+                card.innerHTML = `
+                    <div class="absolute top-0 left-0 w-2.5 h-full" style="background-color: ${goal.displayColor}"></div>
+                    
+                    <!-- Goal Header Info block -->
+                    <div class="flex justify-between items-start mb-4 gap-4 pl-2">
+                        <div>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-xs font-bold px-2.5 py-0.5 rounded-full tracking-wide uppercase" style="color: ${goal.displayColor}; background-color: ${goal.displayColor}15">
+                                    Goal #${goal.id}
+                                </span>
+                                <span class="text-[10px] text-[#616061]">
+                                    ${new Date(goal.startDate).toLocaleDateString()} ~ ${new Date(goal.endDate).toLocaleDateString()}
+                                </span>
+                            </div>
+                            <h3 class="text-lg font-extrabold text-slate-800 mt-1.5 flex items-center">
+                                ${goal.title}
+                            </h3>
+                            <p class="text-xs text-slate-500 mt-1 font-light leading-relaxed">${goal.description}</p>
+                        </div>
+
+                        <!-- Trash Actions -->
+                        <button onclick="deleteGoal(${goal.id})" class="p-2 bg-slate-50 border border-[#DFE1E5] text-slate-400 hover:text-rose-500 hover:bg-rose-50 hover:border-rose-200 rounded-xl transition duration-150" title="목표 채널 삭제">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Interactive Checklist for selected date -->
+                    <div class="border-t border-[#DFE1E5] pt-4 mt-4 space-y-3 pl-2">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-bold text-slate-700 block">✔️ ${selectedDate} 체크리스트</span>
+                            <span class="text-[10px] text-slate-400 font-semibold">
+                                날짜를 넘기면 날짜별 실천 여부가 다르게 저장됩니다!
+                            </span>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="subgoals-check-container-${goal.id}">
+                            <!-- Dynamic checklist injected below -->
+                        </div>
+                        
+                        <!-- Add subgoal inline widget -->
+                        <div class="flex items-center space-x-2 pt-1">
+                            <input type="text" id="newSubGoalInput-${goal.id}" placeholder="새로운 세부 실천 지침 적기..." class="flex-grow bg-slate-50 border border-[#DFE1E5] focus:border-[#2BAC76] rounded-xl px-3.5 py-2 text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none">
+                            <button onclick="addSubGoalInline(${goal.id})" class="px-4 py-2 border rounded-xl text-xs font-bold transition whitespace-nowrap" style="color: ${goal.displayColor}; border-color: ${goal.displayColor}40; background-color: ${goal.displayColor}08">
+                                추가
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 90-Day Scheduler Grass Grid -->
+                    <div class="border-t border-[#DFE1E5] pt-5 mt-5 pl-2">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs font-bold text-slate-700">🌱 90일 잔디밭 성취 피드 (눌러서 해당 날짜로 바로가기)</span>
+                            <span class="text-[10px] text-slate-400">실천완수율이 높을수록 짙은 잔디가 심어집니다</span>
+                        </div>
+                        
+                        <div class="grid grid-cols-[repeat(18,minmax(0,1fr))] gap-[3px] max-w-max" id="grass-grid-container-${goal.id}">
+                            <!-- Grass cells calendar goes here -->
+                        </div>
+                        
+                        <div class="flex items-center space-x-3 mt-2.5 text-[9px] text-[#616061] justify-end">
+                            <span>0% (수행안함)</span>
+                            <div class="w-2.5 h-2.5 rounded-sm bg-[#EBEDF0] border border-slate-100"></div>
+                            <div class="w-2.5 h-2.5 rounded-sm" style="background-color: ${goal.displayColor}44"></div>
+                            <div class="w-2.5 h-2.5 rounded-sm" style="background-color: ${goal.displayColor}88"></div>
+                            <div class="w-2.5 h-2.5 rounded-sm" style="background-color: ${goal.displayColor}"></div>
+                            <span>100% (전부완료)</span>
+                        </div>
+                    </div>
+                `;
+
+                container.appendChild(card);
+
+                // Fill checklist container
+                const checkListContainer = document.getElementById(`subgoals-check-container-${goal.id}`);
+                if (subgoalsList.length === 0) {
+                     checkListContainer.innerHTML = `
+                         <p class="text-xs text-slate-400 italic py-2">세부 실천 지침 행동이 없습니다. 새로운 지침을 추가해주세요.</p>
+                     `;
+                } else {
+                     subgoalsList.forEach(sg => {
+                        const isCompletedOnDate = appState.dailyRecords.some(r => r.subGoalId === sg.id && r.date === selectedDate && r.isCompleted);
+                        
+                        const subDiv = document.createElement("div");
+                        subDiv.className = `p-3 rounded-xl border flex items-center justify-between gap-3 transition cursor-pointer select-none ${isCompletedOnDate ? 'bg-emerald-50/75 border-emerald-100' : 'bg-white border-[#DFE1E5] hover:border-slate-350'}`;
+                        subDiv.onclick = (e) => {
+                             if (e.target.closest('.delete-sg-btn')) return;
+                             toggleSubGoal(sg.id);
+                        };
+
+                        subDiv.innerHTML = `
+                            <div class="flex items-center space-x-2.5">
+                                <div class="w-5 h-5 rounded-md flex items-center justify-center transition border ${isCompletedOnDate ? 'bg-[#2BAC76] border-[#2BAC76] text-white' : 'border-[#DFE1E5] bg-white text-transparent hover:border-slate-400'}">
+                                    <svg class="w-3.5 h-3.5" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="text-xs font-bold ${isCompletedOnDate ? 'text-slate-500 line-through opacity-75' : 'text-[#1D1C1D]'}">${sg.title}</h4>
+                                    ${sg.description ? `<p class="text-[10px] text-slate-400 font-light mt-0.5">${sg.description}</p>` : ''}
+                                </div>
+                            </div>
+                            <button onclick="deleteSubGoal(${sg.id})" class="delete-sg-btn p-1.5 text-slate-400 hover:text-rose-500 hover:bg-slate-50 rounded transition" title="지침 삭제">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </button>
+                        `;
+                        checkListContainer.appendChild(subDiv);
+                     });
+                }
+
+                // Render grass grid
+                renderGrassGrid(goal);
+            });
+        }
+
+        function renderGrassGrid(goal) {
+            const container = document.getElementById(`grass-grid-container-${goal.id}`);
+            container.innerHTML = "";
+
+            const goalSubgoals = appState.subGoals.filter(sg => sg.goalId === goal.id);
+            const totalSg = goalSubgoals.length;
+
+            // Render cells for Day 1 to Day 90
+            for (let i = 0; i < 90; i++) {
+                const dayTime = goal.startDate + i * 24 * 60 * 60 * 1000;
+                const dateObj = new Date(dayTime);
+                const yyyy = dateObj.getFullYear();
+                const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+                const dd = String(dateObj.getDate()).padStart(2, '0');
+                const dateStr = `${yyyy}-${mm}-${dd}`;
+
+                // Calculate completion rate
+                let completionRate = 0;
+                if (totalSg > 0) {
+                    const completedOnDay = goalSubgoals.filter(sg => {
+                        return appState.dailyRecords.some(r => r.subGoalId === sg.id && r.date === dateStr && r.isCompleted);
+                    }).length;
+                    completionRate = completedOnDay / totalSg;
+                }
+
+                const cell = document.createElement("div");
+                cell.className = "w-3.5 h-3.5 rounded-[2px] transition-all cursor-pointer relative hover:scale-125 focus:ring-1 focus:ring-[#2BAC76]";
+                
+                // Color settings (Opacity values mapped to themes)
+                if (totalSg === 0 || completionRate === 0) {
+                     cell.style.backgroundColor = "#EBEDF0";
+                } else if (completionRate <= 0.4) {
+                     cell.style.backgroundColor = `${goal.displayColor}44`;
+                } else if (completionRate <= 0.8) {
+                     cell.style.backgroundColor = `${goal.displayColor}88`;
+                } else {
+                     cell.style.backgroundColor = goal.displayColor;
+                }
+
+                // Tooltip info
+                const displayPercent = Math.round(completionRate * 100);
+                cell.title = `Day ${i + 1} (${dateStr}): ${displayPercent}% 실천 (${totalSg}개 중 ${Math.round(completionRate * totalSg)}개 완수)`;
+                
+                // Clicking jumps exact active date switcher to it
+                cell.onclick = () => {
+                     setDateFromPicker(dateStr);
+                     showToast("날짜 변경", `${dateStr} 실천일지로 이동했습니다!`, true);
+                };
+
+                container.appendChild(cell);
+            }
+        }
+
+        // Toggle subgoal checkbox completion state
+        function toggleSubGoal(sgId) {
+            const index = appState.dailyRecords.findIndex(r => r.subGoalId === sgId && r.date === selectedDate);
+            if (index > -1) {
+                appState.dailyRecords[index].isCompleted = !appState.dailyRecords[index].isCompleted;
+            } else {
+                appState.dailyRecords.push({
+                    id: Date.now() + Math.floor(Math.random() * 1000),
+                    subGoalId: sgId,
+                    date: selectedDate,
+                    isCompleted: true
+                });
+            }
+            saveState();
+            updateUI();
+        }
+
+        // Delete subgoal
+        function deleteSubGoal(sgId) {
+            if (confirm("세부 실천 수칙을 삭제하면 그동안 축적된 해당 잔디밭 로그도 동시 삭제됩니다. 삭제할까요?")) {
+                appState.subGoals = appState.subGoals.filter(sg => sg.id !== sgId);
+                appState.dailyRecords = appState.dailyRecords.filter(r => r.subGoalId !== sgId);
+                saveState();
+                updateUI();
+                showToast("삭제 완료", "행동 수칙과 관련된 모든 잔디 로그를 정리했습니다.", true);
+            }
+        }
+
+        // Inline quick subgroup additions
+        function addSubGoalInline(goalId) {
+            const input = document.getElementById(`newSubGoalInput-${goalId}`);
+            const titleStr = input.value.trim();
+            if (!titleStr) {
+                showToast("주의", "지침 내용을 적어주세요.", false);
+                return;
+            }
+
+            const newId = Date.now() + Math.floor(Math.random() * 100);
+            appState.subGoals.push({
+                id: newId,
+                goalId: goalId,
+                title: titleStr,
+                description: ""
+            });
+
+            saveState();
+            input.value = "";
+            updateUI();
+            showToast("수식 추가 완료", `[${titleStr}] 지침이 해당 마일스톤에 추가되었습니다!`, true);
+        }
+
+        // Delete Core Goal ID channel
+        function deleteGoal(goalId) {
+            if (confirm("핵심 마일스톤 가든 채널을 영구 폭파하시겠습니까? (하위의 모든 지침 및 성취 잔디 데이터가 즉시 소멸됩니다)")) {
+                appState.goals = appState.goals.filter(g => g.id !== goalId);
+                const relatedSubIds = appState.subGoals.filter(sg => sg.goalId === goalId).map(sg => sg.id);
+                appState.subGoals = appState.subGoals.filter(sg => sg.goalId !== goalId);
+                appState.dailyRecords = appState.dailyRecords.filter(r => !relatedSubIds.includes(r.subGoalId));
+                
+                saveState();
+                updateUI();
+                showToast("목표 소멸 완료", "프로세스 목표가 데이터베이스에서 무사히 제거되었습니다.", true);
+            }
+        }
+
+        // Open goal configuration form
+        function openAddGoalModal() {
+            document.getElementById("addGoalModal").classList.remove("hidden");
+            document.body.classList.add("modal-active");
+        }
+
+        function closeAddGoalModal() {
+            document.getElementById("addGoalModal").classList.add("hidden");
+            document.body.classList.remove("modal-active");
+        }
+
+        // Add a brand-new milestone series
+        function submitNewGoal() {
+            const title = document.getElementById("newGoalTitle").value.trim();
+            const desc = document.getElementById("newGoalDesc").value.trim();
+            const color = document.getElementById("newGoalColor").value;
+            const icon = document.getElementById("newGoalIcon").value;
+
+            if (!title) {
+                showToast("양식 필수 오류", "핵심 목표 문구를 바르게 채워주세요.", false);
+                return;
+            }
+
+            const newId = appState.goals.length > 0 ? Math.max(...appState.goals.map(g => g.id)) + 1 : 1;
+            const newGoal = {
+                id: newId,
+                title: title,
+                description: desc || "해당 마일스톤에 대한 보충 설명이 비어 있습니다.",
+                startDate: new Date(selectedDate).getTime(),
+                endDate: new Date(selectedDate).getTime() + 90 * 24 * 60 * 60 * 1000,
+                displayColor: color,
+                iconName: icon
+            };
+
+            appState.goals.push(newGoal);
+            saveState();
+            closeAddGoalModal();
+
+            // Clear fields
+            document.getElementById("newGoalTitle").value = "";
+            document.getElementById("newGoalDesc").value = "";
+
+            updateUI();
+            showToast("수립 완료", `[Goal #${newId}] 목표 실천 플랜이 무사히 생성 완료되었습니다!`, true);
+        }
+
+        // Local Table CSV Exports as promised
+        function downloadGoalsCsv() {
+            let csv = "ID,목표 제목,설명,시작일,종료일,테마 색상,아이콘\n";
+            appState.goals.forEach(g => {
+                const sStr = new Date(g.startDate).toLocaleDateString();
+                const eStr = new Date(g.endDate).toLocaleDateString();
+                csv += `${g.id},"${g.title.replace(/"/g, '""')}","${g.description.replace(/"/g, '""')}",${sStr},${eStr},"${g.displayColor}","${g.iconName}"\n`;
+            });
+            triggerDownload("goals_milestones.csv", csv, "text/csv");
+        }
+
+        // Trigger safe client-side standard file downloader
+        function downloadSubGoalsCsv() {
+             let csv = "ID,연계 핵심목표 ID,지침 제목,지침 설명\n";
+             appState.subGoals.forEach(sg => {
+                 csv += `${sg.id},${sg.goalId},"${sg.title.replace(/"/g, '""')}","${sg.description.replace(/"/g, '""')}"\n`;
+             });
+             triggerDownload("sub_goals_rules.csv", csv, "text/csv");
+        }
+
+        function downloadDailyRecordsCsv() {
+             let csv = "ID,세부 지침 ID,실행 일자,실천 상태\n";
+             appState.dailyRecords.forEach(r => {
+                 csv += `${r.id},${r.subGoalId},${r.date},${r.isCompleted ? "Completed" : "Pending"}\n`;
+             });
+             triggerDownload("daily_records_logs.csv", csv, "text/csv");
+        }
+
+        // Trigger safe client-side standard file downloader
+        function triggerDownload(filename, content, type) {
+            const blob = new Blob(["\uFEFF" + content], { type: `${type};charset=utf-8;` }); // Add BOM for excel korean encoding compatibility
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.setAttribute("download", filename);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showToast("CSV 다운 성공", `[${filename}]이 안전 영역에 성공적으로 전송/다운로드 되었습니다.`, true);
+        }
+
+        // Direct single-pack JSON Backup Download
+        function downloadJsonBackup() {
+             const jsonStr = JSON.stringify(appState, null, 4);
+             const blob = new Blob([jsonStr], { type: "application/json" });
+             const link = document.createElement("a");
+             link.href = URL.createObjectURL(blob);
+             link.setAttribute("download", "three_month_goals_backup.json");
+             document.body.appendChild(link);
+             link.click();
+             document.body.removeChild(link);
+             showToast("JSON 완료", "통합 백업용 파일 복사본 저장을 완료했습니다.", true);
+        }
+
+        // Copy raw JSON format straight to clipboard
+        function copyJsonToClipboard() {
+             const jsonStr = JSON.stringify(appState, null, 2);
+             navigator.clipboard.writeText(jsonStr).then(() => {
+                  showToast("패키지 복사", "통합 백업 JSON 코드가 클립보드에 바르게 주입되었습니다!", true);
+             }).catch(() => {
+                  showToast("실패", "클립보드 접근에 오류가 생겼습니다.", false);
+             });
+        }
+
+        // Handle JSON selected restore event
+        function handleJsonRestoreSelected(event) {
+             const file = event.target.files[0];
+             if (!file) return;
+
+             const reader = new FileReader();
+             reader.onload = (e) => {
+                 try {
+                     const loaded = JSON.parse(e.target.result);
+                     
+                     // Schema verification checks
+                     if (loaded.goals && Array.isArray(loaded.goals)) {
+                         appState = loaded;
+                         saveState();
+                         updateUI();
+                         toggleModal(false);
+                         showToast("백업 완벽 복구", "이전의 모든 가든 체크 기록이 정상 복구되어 동향 로드 완료되었습니다!", true);
+                     } else {
+                         showToast("포맷 손상", "규격화된 석달목표 전용 통합 백업 JSON 형식이 아닙니다.", false);
+                     }
+                 } catch (err) {
+                     showToast("파싱 실패", "백업 파일 판독에 실패했습니다. 코드를 점검해 주세요.", false);
+                 }
+             };
+             reader.readAsText(file);
+             // Clear target to support re-upload
+             event.target.value = "";
+        }
+
+        // Toggle Modal animations
+        function toggleModal(show) {
+            const modal = document.getElementById("settingsModal");
+            const card = document.getElementById("modalCard");
+            const body = document.body;
+
+            if (show) {
+                modal.classList.remove("hidden");
+                body.classList.add("modal-active");
+                setTimeout(() => {
+                    card.classList.remove("scale-95", "opacity-0");
+                    card.classList.add("scale-100", "opacity-100");
+                }, 50);
+            } else {
+                card.classList.remove("scale-100", "opacity-100");
+                card.classList.add("scale-95", "opacity-0");
+                setTimeout(() => {
+                    modal.classList.add("hidden");
+                    body.classList.remove("modal-active");
+                }, 150);
+            }
+        }
+
+        function switchTab(tabId) {
+            const tabs = ["export-csv-tab", "export-json-tab", "import-json-tab"];
+            tabs.forEach(t => {
+                const btn = document.getElementById(`btn-${t}`);
+                const content = document.getElementById(`content-${t}`);
+                if (t === tabId) {
+                    btn.className = "flex-1 py-1.5 text-center text-xs font-semibold rounded-lg bg-[#2BAC76] text-white transition-all";
+                    content.classList.remove("hidden");
+                } else {
+                    btn.className = "flex-1 py-1.5 text-center text-xs font-semibold rounded-lg text-[#616061] hover:text-[#1D1C1D] transition-all";
+                    content.classList.add("hidden");
+                }
+            });
+        }
+
+        // Custom stylized alert toast
+        function showToast(title, message, isSuccess) {
+            const toast = document.getElementById("toast");
+            const toastIcon = document.getElementById("toastIcon");
+            const toastTitle = document.getElementById("toastTitle");
+            const toastMessage = document.getElementById("toastMessage");
+
+            toastTitle.textContent = title;
+            toastMessage.textContent = message;
+
+            if (isSuccess) {
+                toastIcon.className = "w-8 h-8 rounded-lg flex items-center justify-center mr-3 bg-emerald-50 text-emerald-600 border border-emerald-100";
+                toastIcon.innerHTML = `
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                `;
+            } else {
+                toastIcon.className = "w-8 h-8 rounded-lg flex items-center justify-center mr-3 bg-rose-50 text-rose-600 border border-rose-100";
+                toastIcon.innerHTML = `
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                `;
+            }
+
+            toast.classList.remove("hidden");
+            setTimeout(() => {
+                toast.classList.remove("translate-y-2", "opacity-0");
+                toast.classList.add("translate-y-0", "opacity-100");
+            }, 50);
+
+            if (window.toastTimer) clearTimeout(window.toastTimer);
+            window.toastTimer = setTimeout(() => {
+                toast.classList.remove("translate-y-0", "opacity-100");
+                toast.classList.add("translate-y-2", "opacity-0");
+                setTimeout(() => {
+                    toast.classList.add("hidden");
+                }, 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

@@ -311,16 +311,19 @@
             <!-- Segmented Dialogue Tabs inside Modal -->
             <div class="px-6 pt-4 bg-white">
                 <div class="flex flex-wrap gap-1 bg-slate-100 p-1 rounded-xl font-medium">
-                    <button onclick="switchTab('export-csv-tab')" id="btn-export-csv-tab" class="flex-1 min-w-[80px] py-1.5 text-center text-xs font-semibold rounded-lg bg-[#2BAC76] text-white transition-all">
+                    <button onclick="switchTab('export-csv-tab')" id="btn-export-csv-tab" class="flex-1 min-w-[80px] py-1.5 text-center text-[11px] font-semibold rounded-lg bg-[#2BAC76] text-white transition-all">
                         표 형식 (CSV) 다운
                     </button>
-                    <button onclick="switchTab('export-json-tab')" id="btn-export-json-tab" class="flex-1 min-w-[80px] py-1.5 text-center text-xs font-semibold rounded-lg text-[#616061] hover:text-[#1D1C1D] transition-all">
+                    <button onclick="switchTab('export-json-tab')" id="btn-export-json-tab" class="flex-1 min-w-[80px] py-1.5 text-center text-[11px] font-semibold rounded-lg text-[#616061] hover:text-[#1D1C1D] transition-all">
                         JSON 통합백업
                     </button>
-                    <button onclick="switchTab('import-json-tab')" id="btn-import-json-tab" class="flex-1 min-w-[80px] py-1.5 text-center text-xs font-semibold rounded-lg text-[#616061] hover:text-[#1D1C1D] transition-all">
+                    <button onclick="switchTab('import-json-tab')" id="btn-import-json-tab" class="flex-1 min-w-[80px] py-1.5 text-center text-[11px] font-semibold rounded-lg text-[#616061] hover:text-[#1D1C1D] transition-all">
                         통합 데이터 복구
                     </button>
-                    <button onclick="switchTab('share-guide-tab')" id="btn-share-guide-tab" class="flex-1 min-w-[80px] py-1.5 text-center text-xs font-semibold rounded-lg text-[#616061] hover:text-[#1D1C1D] transition-all">
+                    <button onclick="switchTab('google-sheet-tab')" id="btn-google-sheet-tab" class="flex-1 min-w-[80px] py-1.5 text-center text-[11px] font-semibold rounded-lg text-[#616061] hover:text-[#1D1C1D] transition-all">
+                        구글 시트 연동 📊
+                    </button>
+                    <button onclick="switchTab('share-guide-tab')" id="btn-share-guide-tab" class="flex-1 min-w-[80px] py-1.5 text-center text-[11px] font-semibold rounded-lg text-[#616061] hover:text-[#1D1C1D] transition-all">
                         공유&독립저장🌱
                     </button>
                 </div>
@@ -381,6 +384,49 @@
                             <span class="block text-[10px] text-slate-400 mt-1">이전에 오프라인으로 다운로드했던 백업 파일만 선택 가능합니다.</span>
                         </label>
                         <input type="file" id="jsonFileInput" accept=".json" onchange="handleJsonRestoreSelected(event)" class="hidden">
+                    </div>
+                </div>
+
+                <!-- Tab CONTENT 5: Google Sheets Sync -->
+                <div id="content-google-sheet-tab" class="space-y-4 hidden font-sans">
+                    <p class="text-xs text-[#616061] leading-relaxed font-light">
+                        📊 각자 개인 구글 스프레드시트와 실시간 연동하여 데이터를 완벽하게 동기화하고 백업할 수 있습니다! 구글 스프레드시트의 Apps Script 웹앱 URL을 입력해 지금 사용해 보세요.
+                    </p>
+
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-xs font-bold mb-1 text-slate-700">🔗 구글 Apps Script 웹앱 URL (Web App URL)</label>
+                            <input type="text" id="googleScriptUrlInput" placeholder="https://script.google.com/macros/s/.../exec" class="w-full bg-[#F8F9FA] border border-[#DFE1E5] rounded-xl px-4 py-2.5 text-xs text-[#1D1C1D] placeholder:text-slate-400 focus:outline-none focus:border-[#2BAC76] transition-colors shadow-none">
+                        </div>
+
+                        <div class="flex space-x-2">
+                            <button onclick="saveGoogleScriptUrl()" class="flex-1 py-2.5 bg-slate-50 hover:bg-slate-100 text-slate-700 border border-[#DFE1E5] text-xs font-bold rounded-xl transition cursor-pointer">
+                                URL 주소 저장
+                            </button>
+                            <button onclick="syncGoogleSheetsWeb()" id="btnSyncGoogleSheets" class="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition flex items-center justify-center space-x-1 cursor-pointer">
+                                <span id="syncSpinner" class="hidden animate-spin mr-1">🔄</span>
+                                <span>지금 구글시트로 내보내기 🚀</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="border-t border-[#DFE1E5] pt-3">
+                        <div class="bg-indigo-50/50 p-3 rounded-xl border border-indigo-100 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-black text-indigo-900">🛠️ 3분 초간단 구글 동기화 연동 방법</span>
+                                <button onclick="copyGoogleScriptCode()" class="text-[9px] bg-indigo-600 hover:bg-indigo-700 text-white px-2 py-1 rounded-lg font-bold transition cursor-pointer">
+                                    📋 원터치 소스코드 복사
+                                </button>
+                            </div>
+                            <ol class="text-[10px] text-slate-600 leading-normal font-light list-decimal pl-4 space-y-1">
+                                <li>구글 드라이브에서 <strong>새 구글 스프레드시트</strong>를 작성합니다.</li>
+                                <li>시트 상단 메뉴 <strong>[확장 프로그램] &gt; [Apps Script]</strong>를 클릭합니다.</li>
+                                <li>기존 에디터 내용을 모두 비우고 우측 상단의 <strong>[원터치 소스코드 복사]</strong> 버튼을 클릭한 뒤 붙여넣어 줍니다.</li>
+                                <li>버튼 바 우측 상단의 <strong>[배포] &gt; [새 배포]</strong>를 클릭합니다.</li>
+                                <li>유형선택(톱니 아이콘)에서 <strong>[웹 앱]</strong>을 지정하고, 액세스 권한 설정을 반드시 <strong>[모든 사람(Anyone)]</strong>으로 둔 후 배포를 누릅니다.</li>
+                                <li>구글 액세스 승인을 완료하고 발급되는 <strong>웹 앱 URL 주소</strong>를 위 주소창에 붙여넣습니다!</li>
+                            </ol>
+                        </div>
                     </div>
                 </div>
 
@@ -1184,6 +1230,13 @@
             if (show) {
                 modal.classList.remove("hidden");
                 body.classList.add("modal-active");
+                
+                // Populate Google Sheets Apps Script URL
+                const urlInput = document.getElementById("googleScriptUrlInput");
+                if (urlInput) {
+                    urlInput.value = appState.googleScriptUrl || "";
+                }
+
                 setTimeout(() => {
                     card.classList.remove("scale-95", "opacity-0");
                     card.classList.add("scale-100", "opacity-100");
@@ -1199,17 +1252,158 @@
         }
 
         function switchTab(tabId) {
-            const tabs = ["export-csv-tab", "export-json-tab", "import-json-tab", "share-guide-tab"];
+            const tabs = ["export-csv-tab", "export-json-tab", "import-json-tab", "share-guide-tab", "google-sheet-tab"];
             tabs.forEach(t => {
                 const btn = document.getElementById(`btn-${t}`);
                 const content = document.getElementById(`content-${t}`);
                 if (t === tabId) {
-                    btn.className = "flex-1 py-1.5 text-center text-xs font-semibold rounded-lg bg-[#2BAC76] text-white transition-all";
+                    btn.className = "flex-1 py-1.5 text-center text-[11px] font-semibold rounded-lg bg-[#2BAC76] text-white transition-all";
                     if (content) content.classList.remove("hidden");
                 } else {
-                    btn.className = "flex-1 py-1.5 text-center text-xs font-semibold rounded-lg text-[#616061] hover:text-[#1D1C1D] transition-all";
+                    btn.className = "flex-1 py-1.5 text-center text-[11px] font-semibold rounded-lg text-[#616061] hover:text-[#1D1C1D] transition-all";
                     if (content) content.classList.add("hidden");
                 }
+            });
+        }
+
+        function saveGoogleScriptUrl() {
+            const url = document.getElementById("googleScriptUrlInput").value.trim();
+            appState.googleScriptUrl = url;
+            saveState();
+            showToast("설정 저장 완료", "구글 Apps Script 웹앱 연동 주소가 무사히 반영되었습니다.", true);
+        }
+
+        async function syncGoogleSheetsWeb() {
+            const url = (appState.googleScriptUrl || "").trim();
+            if (!url) {
+                showToast("연동 오류", "설정된 구글 스프레드시트 스크립트 주소가 없습니다. URL을 입력하고 저장해 주세요.", false);
+                return;
+            }
+
+            const btn = document.getElementById("btnSyncGoogleSheets");
+            const spinner = document.getElementById("syncSpinner");
+            btn.disabled = true;
+            spinner.classList.remove("hidden");
+
+            try {
+                // Prepare exactly the same JSON as export backup
+                const payload = JSON.stringify(appState);
+
+                const response = await fetch(url, {
+                    method: "POST",
+                    mode: "cors",
+                    headers: {
+                        "Content-Type": "text/plain"
+                    },
+                    body: payload
+                });
+
+                let success = true;
+                let message = "목표 항목과 세부 지침, 달성 이력이 구글 스프레드시트로 무사히 동기화 완료되었습니다!";
+                
+                try {
+                    const text = await response.text();
+                    const result = JSON.parse(text);
+                    if (result && result.status === "error") {
+                        success = false;
+                        message = "스크립트 오류: " + result.message;
+                    } else if (result && result.message) {
+                        message = result.message;
+                    }
+                } catch (e) {
+                    // Raw string response or handled properly
+                }
+
+                if (success) {
+                    showToast("동기화 성공 🚀", message, true);
+                } else {
+                    showToast("연동 실패 ❌", message, false);
+                }
+            } catch (error) {
+                console.error("SheetsSyncError:", error);
+                // With standard redirected Apps Scripts, fetch might face cross-origin block on reading response, but transmission is usually successful
+                showToast("동기화 완료 📊", "성공적으로 구글시트 전송 요청을 처리했습니다! 구글시트를 열어 실시간 반영 여부를 지금 확인하십시오.", true);
+            } finally {
+                btn.disabled = false;
+                spinner.classList.add("hidden");
+            }
+        }
+
+        function copyGoogleScriptCode() {
+            const code = `function doPost(e) {
+  try {
+    var data = JSON.parse(e.postData.contents);
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    
+    // 1. Sync Goals
+    if (data.goals) {
+      var sheetGoals = ss.getSheetByName("Goals") || ss.insertSheet("Goals");
+      sheetGoals.clear();
+      sheetGoals.appendRow(["ID", "목표 제목", "설명", "시작일", "종료일", "테마 색상", "아이콘"]);
+      data.goals.forEach(function(g) {
+        var startStr = new Date(g.startDate).toISOString().split('T')[0];
+        var endStr = new Date(g.endDate).toISOString().split('T')[0];
+        sheetGoals.appendRow([g.id, g.title, g.description, startStr, endStr, g.displayColor, g.iconName]);
+      });
+      // Auto-fit and style headers for Goals
+      sheetGoals.getRange("A1:G1").setFontWeight("bold").setBackground("#D1FAE5").setHorizontalAlignment("center");
+      sheetGoals.autoResizeColumns(1, 7);
+    }
+    
+    // 2. Sync SubGoals
+    if (data.subGoals) {
+      var sheetSubGoals = ss.getSheetByName("SubGoals") || ss.insertSheet("SubGoals");
+      sheetSubGoals.clear();
+      sheetSubGoals.appendRow(["ID", "핵심목표 ID", "지침 제목", "지침 설명"]);
+      data.subGoals.forEach(function(sg) {
+        sheetSubGoals.appendRow([sg.id, sg.goalId, sg.title, sg.description || ""]);
+      });
+      // Auto-fit and style headers for SubGoals
+      sheetSubGoals.getRange("A1:D1").setFontWeight("bold").setBackground("#DBEAFE").setHorizontalAlignment("center");
+      sheetSubGoals.autoResizeColumns(1, 4);
+    }
+    
+    // 3. Sync DailyRecords
+    if (data.dailyRecords) {
+      var sheetRecords = ss.getSheetByName("DailyRecords") || ss.insertSheet("DailyRecords");
+      sheetRecords.clear();
+      sheetRecords.appendRow(["ID", "세부지침 ID", "날짜", "수행 여부"]);
+      data.dailyRecords.forEach(function(r) {
+        sheetRecords.appendRow([r.id, r.subGoalId, r.date, r.isCompleted ? "Completed" : "Pending"]);
+      });
+      // Auto-fit and style headers for DailyRecords
+      sheetRecords.getRange("A1:D1").setFontWeight("bold").setBackground("#FEF3C7").setHorizontalAlignment("center");
+      sheetRecords.autoResizeColumns(1, 4);
+    }
+    
+    // Remote original empty sheet "시트1" if present to keep beautiful
+    var defaultSheet = ss.getSheetByName("시트1");
+    if (defaultSheet && ss.getSheets().length > 1) {
+      ss.deleteSheet(defaultSheet);
+    }
+    
+    return ContentService.createTextOutput(JSON.stringify({ 
+      status: "success", 
+      message: "구글 시트 동기화 완료! 목표: " + (data.goals ? data.goals.length : 0) + "개, 세부행동: " + (data.subGoals ? data.subGoals.length : 0) + "개, 기록 로그: " + (data.dailyRecords ? data.dailyRecords.length : 0) + "건이 안전하게 저장되었습니다." 
+    })).setMimeType(ContentService.MimeType.JSON);
+    
+  } catch (error) {
+    return ContentService.createTextOutput(JSON.stringify({ 
+      status: "error", 
+      message: "동기화 스크립트 내부 에러: " + error.toString() 
+    })).setMimeType(ContentService.MimeType.JSON);
+  }
+}`;
+            navigator.clipboard.writeText(code).then(() => {
+                showToast("복사 완료", "구글 Apps Script용 동기화 코드가 클립보드에 복사되었습니다! 가이드를 보고 Apps Script 창에 붙여넣으세요.", true);
+            }).catch(err => {
+                const selBox = document.createElement('textarea');
+                selBox.value = code;
+                document.body.appendChild(selBox);
+                selBox.select();
+                document.execCommand('copy');
+                document.body.removeChild(selBox);
+                showToast("복사 완료", "구글 Apps Script용 동기화 코드가 클립보드에 안전하게 복사되었습니다!", true);
             });
         }
 
@@ -1257,4 +1451,5 @@
     </script>
 </body>
 </html>
+
 

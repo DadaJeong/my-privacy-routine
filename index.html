@@ -271,18 +271,15 @@
 
             <!-- Segmented Dialogue Tabs inside Modal -->
             <div class="px-6 pt-4 bg-white">
-                <div class="flex flex-wrap gap-1 bg-slate-100 p-1 rounded-xl font-medium">
-                    <button onclick="switchTab('export-csv-tab')" id="btn-export-csv-tab" class="flex-1 min-w-[80px] py-1.5 text-center text-xs font-semibold rounded-lg bg-[#2BAC76] text-white transition-all">
+                <div class="flex space-x-1 bg-slate-100 p-1 rounded-xl font-medium">
+                    <button onclick="switchTab('export-csv-tab')" id="btn-export-csv-tab" class="flex-1 py-1.5 text-center text-xs font-semibold rounded-lg bg-[#2BAC76] text-white transition-all">
                         표 형식 (CSV) 다운
                     </button>
-                    <button onclick="switchTab('export-json-tab')" id="btn-export-json-tab" class="flex-1 min-w-[80px] py-1.5 text-center text-xs font-semibold rounded-lg text-[#616061] hover:text-[#1D1C1D] transition-all">
+                    <button onclick="switchTab('export-json-tab')" id="btn-export-json-tab" class="flex-1 py-1.5 text-center text-xs font-semibold rounded-lg text-[#616061] hover:text-[#1D1C1D] transition-all">
                         JSON 통합백업
                     </button>
-                    <button onclick="switchTab('import-json-tab')" id="btn-import-json-tab" class="flex-1 min-w-[80px] py-1.5 text-center text-xs font-semibold rounded-lg text-[#616061] hover:text-[#1D1C1D] transition-all">
+                    <button onclick="switchTab('import-json-tab')" id="btn-import-json-tab" class="flex-1 py-1.5 text-center text-xs font-semibold rounded-lg text-[#616061] hover:text-[#1D1C1D] transition-all">
                         통합 데이터 복구
-                    </button>
-                    <button onclick="switchTab('share-guide-tab')" id="btn-share-guide-tab" class="flex-1 min-w-[80px] py-1.5 text-center text-xs font-semibold rounded-lg text-[#616061] hover:text-[#1D1C1D] transition-all">
-                        공유&독립저장🌱
                     </button>
                 </div>
             </div>
@@ -298,7 +295,7 @@
 
                     <div class="grid grid-cols-1 gap-2 pt-2">
                         <button onclick="downloadGoalsCsv()" class="w-full py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-150 rounded-xl text-xs font-bold transition">
-                            🎯 핵심목표 CSV 다운로드
+                            🎯 90일 핵심목표 CSV 다운로드
                         </button>
                         <button onclick="downloadSubGoalsCsv()" class="w-full py-2.5 bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-150 rounded-xl text-xs font-bold transition">
                             🌱 세부 행동규칙 CSV 다운로드
@@ -345,31 +342,6 @@
                     </div>
                 </div>
 
-                <!-- Tab CONTENT 4: Sharing Guide -->
-                <div id="content-share-guide-tab" class="space-y-4 hidden">
-                    <div>
-                        <h4 class="text-xs font-extrabold text-slate-800 flex items-center mb-1 bg-emerald-50 text-emerald-800 px-2.5 py-1.5 rounded-lg border border-emerald-100">
-                            🔒 100% 온디바이스 오프라인 보관 방식 안내
-                        </h4>
-                        <p class="text-xs text-slate-600 leading-relaxed font-light pl-1 mt-1">
-                            이 웹앱은 모든 설정 정보와 성취 이력(잔디밭 기록)을 어떠한 외부 클라우드나 외부 서버 없이 철저하게 각 브라우저 내부(LocalStorage)에만 안전하게 격리 보관합니다. 다른 사람과 데이터가 겹치지 않고 온전히 개인 전용 프로필 상태를 보장합니다.
-                        </p>
-                    </div>
-                    <div>
-                        <h4 class="text-xs font-extrabold text-[#2BAC76] flex items-center mb-1 bg-[#2BAC76]/10 px-2.5 py-1.5 rounded-lg border border-[#2BAC76]/20">
-                            🎁 실천 메커니즘을 친구와 공유하는 방법
-                        </h4>
-                        <ol class="text-xs text-slate-600 leading-relaxed font-light list-decimal pl-5 space-y-1 mt-1">
-                            <li>'JSON 통합백업' 탭으로 이동하여 <strong>[백업용 통합 JSON 파일 받기]</strong>를 통해 다운로드 받거나 <strong>[클립보드에 통합 JSON 복사하기]</strong>를 클릭하세요.</li>
-                            <li>복사되거나 저장된 JSON 파일을 카카오톡, 이메일 등으로 친구에게 공유하세요.</li>
-                            <li>해당 자료를 전달받은 친구가 자신의 앱에서 '통합 데이터 복구' 탭을 통해 업로드 및 반영하면, 실천 목표와 세부 규칙들이 똑같이 세팅됩니다!</li>
-                        </ol>
-                        <p class="text-[10px] text-slate-400 mt-2 pl-1 leading-normal">
-                            * 이후 각자 자율적으로 실천하면서 아름답게 가꾸어진 개별 잔디밭 화면만 캡처하여 서로 전송해 성취 증명 및 습관 유지를 할 수 있습니다!
-                        </p>
-                    </div>
-                </div>
-
             </div>
 
             <!-- Modal Footer -->
@@ -385,7 +357,7 @@
     <div id="addGoalModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
         <div onclick="closeAddGoalModal()" class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"></div>
         <div class="bg-white border border-[#DFE1E5] rounded-3xl w-full max-w-lg shadow-2xl relative z-10 p-6 space-y-4">
-            <h3 class="font-extrabold text-[#1D1C1D] text-lg">🎯 새로운 핵심 마일스톤 생성</h3>
+            <h3 class="font-extrabold text-[#1D1C1D] text-lg">🎯 새로운 90일 핵심 마일스톤 생성</h3>
             
             <div class="space-y-3">
                 <div>
@@ -396,21 +368,6 @@
                     <label class="block text-xs font-bold text-slate-700 mb-1">상세 설명 / 포부</label>
                     <input type="text" id="newGoalDesc" placeholder="예: 매일 영단어 학습 및 1회 포스팅을 통해 스펙을 향상 시킵니다." class="w-full bg-[#F8F9FA] border border-[#DFE1E5] rounded-xl px-4 py-2.5 text-sm text-[#1D1C1D] placeholder:text-slate-400 focus:outline-none focus:border-[#2BAC76] transition-colors">
                 </div>
-                
-                <!-- 3.5 Goal Duration Setting Section matching Jetpack Compose -->
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">📅 실천 및 기록 설정 기간</label>
-                    <div class="flex items-center space-x-1.5 mb-2">
-                        <button type="button" onclick="setModalDuration(30)" id="btn-duration-30" class="flex-1 py-2 text-xs font-semibold rounded-lg border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 transition-all">30일</button>
-                        <button type="button" onclick="setModalDuration(60)" id="btn-duration-60" class="flex-1 py-2 text-xs font-semibold rounded-lg border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 transition-all">60일</button>
-                        <button type="button" onclick="setModalDuration(100)" id="btn-duration-100" class="flex-1 py-2 text-xs font-semibold rounded-lg border border-[#2BAC76] bg-[#2BAC76] text-white transition-all">100일</button>
-                        <button type="button" onclick="setModalDuration('custom')" id="btn-duration-custom" class="flex-1 py-2 text-xs font-semibold rounded-lg border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 transition-all">직접 입력</button>
-                    </div>
-                    <div id="customDurationInputContainer" class="hidden">
-                        <input type="number" id="customGoalDuration" placeholder="실천 일수 (7 ~ 365)" min="7" max="365" class="w-full bg-[#F8F9FA] border border-[#DFE1E5] rounded-xl px-4 py-2.5 text-sm text-[#1D1C1D] placeholder:text-slate-400 focus:outline-none focus:border-[#2BAC76] transition-colors">
-                    </div>
-                </div>
-
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="block text-xs font-bold text-slate-700 mb-1">핵심 테마 색상</label>
@@ -453,17 +410,7 @@
             dailyRecords: []
         };
 
-        // Helper to format Date to "yyyy-MM-dd"
-        function getTodayDateString() {
-            const today = new Date();
-            const yyyy = today.getFullYear();
-            const mm = String(today.getMonth() + 1).padStart(2, '0');
-            const dd = String(today.getDate()).padStart(2, '0');
-            return `${yyyy}-${mm}-${dd}`;
-        }
-
-        let selectedDate = getTodayDateString();
-        let modalDurationDays = 100; // Default matching Jetpack Compose
+        let selectedDate = "2026-06-02";
 
         // Initial default state matched exactly
         const INITIAL_STATE = {
@@ -472,8 +419,8 @@
                     id: 1,
                     title: "영어 마스터 및 기술 블로그 쓰기",
                     description: "3개월 동안 해외 취업을 위해 매일 리딩 및 테크 피드 작성",
-                    startDate: new Date().getTime() - 3 * 24 * 60 * 60 * 1000,
-                    endDate: new Date().getTime() + 87 * 24 * 60 * 60 * 1000,
+                    startDate: new Date("2026-05-30").getTime(),
+                    endDate: new Date("2026-05-30").getTime() + 90 * 24 * 60 * 60 * 1000,
                     displayColor: "#2BAC76",
                     iconName: "Star"
                 },
@@ -481,8 +428,8 @@
                     id: 2,
                     title: "러닝 10km 마라톤 완주",
                     description: "초보자 건강 관리 및 체력 저하 극복 프로세스",
-                    startDate: new Date().getTime(),
-                    endDate: new Date().getTime() + 90 * 24 * 60 * 60 * 1000,
+                    startDate: new Date("2026-06-02").getTime(),
+                    endDate: new Date("2026-06-02").getTime() + 90 * 24 * 60 * 60 * 1000,
                     displayColor: "#1264A3",
                     iconName: "TrendingUp"
                 }
@@ -494,8 +441,11 @@
                 { id: 202, goalId: 2, title: "매달 누적 80km 주행 돌파", description: "나이키 런클럽 데이터 연동" }
             ],
             dailyRecords: [
-                { id: 1001, subGoalId: 101, date: getTodayDateString(), isCompleted: true },
-                { id: 1004, subGoalId: 201, date: getTodayDateString(), isCompleted: true }
+                { id: 1001, subGoalId: 101, date: "2026-06-01", isCompleted: true },
+                { id: 1002, subGoalId: 101, date: "2026-06-02", isCompleted: true },
+                { id: 1003, subGoalId: 102, date: "2026-06-02", isCompleted: false },
+                { id: 1004, subGoalId: 201, date: "2026-06-01", isCompleted: true },
+                { id: 1005, subGoalId: 201, date: "2026-06-02", isCompleted: false }
             ]
         };
 
@@ -506,32 +456,27 @@
             updateUI();
         });
 
-        // Load State from Local Storage or Defaults (Fully Iframe/Sandboxed protected code)
+        // Load State from Local Storage or Defaults
         function loadState() {
-            try {
-                const raw = localStorage.getItem("milestone_tracker_state");
-                if (raw) {
+            const raw = localStorage.getItem("milestone_tracker_state");
+            if (raw) {
+                try {
                     appState = JSON.parse(raw);
                     if (!appState.goals) appState.goals = [];
                     if (!appState.subGoals) appState.subGoals = [];
                     if (!appState.dailyRecords) appState.dailyRecords = [];
-                } else {
-                    appState = JSON.parse(JSON.stringify(INITIAL_STATE));
-                    saveState();
+                } catch (e) {
+                    appState = { ...INITIAL_STATE };
                 }
-            } catch (e) {
-                console.warn("LocalStorage loading blocked in current sandbox context. Utilizing secure in-memory backup state.", e);
-                appState = JSON.parse(JSON.stringify(INITIAL_STATE));
+            } else {
+                appState = { ...INITIAL_STATE };
+                saveState();
             }
         }
 
-        // Save active state to local storage (Safely isolated)
+        // Save active state to local storage
         function saveState() {
-            try {
-                localStorage.setItem("milestone_tracker_state", JSON.stringify(appState));
-            } catch (e) {
-                console.warn("LocalStorage writing blocked in current sandbox context. Settings will persist in the current browser memory tab.", e);
-            }
+            localStorage.setItem("milestone_tracker_state", JSON.stringify(appState));
         }
 
         // Initialize picker element value
@@ -541,41 +486,15 @@
         }
 
         function setToToday() {
-            setDateFromPicker(getTodayDateString());
+            const todayStr = "2026-06-02"; // Setting exact operational context today
+            setDateFromPicker(todayStr);
         }
 
         function setDateFromPicker(val) {
             if (!val) return;
             selectedDate = val;
-            const dateInput = document.getElementById("selectedDatePicker");
-            if (dateInput) {
-                dateInput.value = val;
-            }
+            document.getElementById("selectedDatePicker").value = val;
             updateUI();
-        }
-
-        // Duration setting in modal
-        function setModalDuration(days) {
-            modalDurationDays = days;
-            const buttons = [30, 60, 100, 'custom'];
-            buttons.forEach(btn => {
-                const btnEl = document.getElementById(`btn-duration-${btn}`);
-                if (!btnEl) return;
-                if (btn === days) {
-                    btnEl.className = "flex-1 py-1.5 text-xs font-semibold rounded-lg border border-[#2BAC76] bg-[#2BAC76] text-white transition-all";
-                } else {
-                    btnEl.className = "flex-1 py-1.5 text-xs font-semibold rounded-lg border border-slate-200 bg-slate-50 text-slate-705 hover:bg-slate-100 transition-all";
-                }
-            });
-
-            const customContainer = document.getElementById("customDurationInputContainer");
-            if (days === 'custom') {
-                customContainer.classList.remove("hidden");
-                // Focus custom input
-                setTimeout(() => document.getElementById("customGoalDuration").focus(), 80);
-            } else {
-                customContainer.classList.add("hidden");
-            }
         }
 
         // Simple next/previous switcher action
@@ -597,25 +516,22 @@
 
         function renderTimelineHeader() {
             let earliestStart = Date.now();
-            let latestEnd = Date.now() + 99 * 24 * 60 * 60 * 1000;
-            
             if (appState.goals.length > 0) {
                 earliestStart = Math.min(...appState.goals.map(g => g.startDate));
-                latestEnd = Math.max(...appState.goals.map(g => g.endDate));
+            } else {
+                earliestStart = new Date("2026-06-02").getTime();
             }
 
-            const totalGoalDays = Math.max(1, Math.round((latestEnd - earliestStart) / (1000 * 60 * 60 * 24)) + 1);
-            
-            const selectedDateTime = new Date(selectedDate).getTime();
-            let daysElapsed = Math.floor((selectedDateTime - earliestStart) / (1000 * 60 * 60 * 24)) + 1;
+            const diffTime = new Date(selectedDate).getTime() - earliestStart;
+            let daysElapsed = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
             if (daysElapsed < 1) daysElapsed = 1;
-            if (daysElapsed > totalGoalDays) daysElapsed = totalGoalDays;
+            if (daysElapsed > 90) daysElapsed = 90;
 
-            const progressPercent = Math.min(100, Math.round((daysElapsed / totalGoalDays) * 100));
+            const progressPercent = Math.min(100, Math.round((daysElapsed / 90) * 100));
 
             const progressHeading = document.getElementById("timelineProgressHeading");
             if (progressHeading) {
-                progressHeading.textContent = `Day ${daysElapsed} / ${totalGoalDays}일차`;
+                progressHeading.textContent = `Day ${daysElapsed} / 90일차`;
                 progressHeading.className = "text-base font-black text-slate-800 mt-1";
             }
             document.getElementById("timelineStartDateText").textContent = `프로그램 시작일: ${new Date(earliestStart).toLocaleDateString()}`;
@@ -630,14 +546,7 @@
             document.getElementById("statCompletedCount").textContent = totalCompletionCount;
             document.getElementById("statActiveSubGoals").textContent = subGoalsCount;
 
-            let theoreticalTotalUnits = 0;
-            appState.goals.forEach(goal => {
-                const goalSubgoals = appState.subGoals.filter(sg => sg.goalId === goal.id);
-                const diffTime = goal.endDate - goal.startDate;
-                const totalDays = Math.max(1, Math.round(diffTime / (1000 * 60 * 60 * 24)) + 1);
-                theoreticalTotalUnits += goalSubgoals.length * totalDays;
-            });
-
+            const theoreticalTotalUnits = subGoalsCount * 90;
             const finalPercent = theoreticalTotalUnits > 0 ? Math.min(100, Math.round((totalCompletionCount / theoreticalTotalUnits) * 100)) : 0;
             
             document.getElementById("totalCompletionPercentage").textContent = `${finalPercent}%`;
@@ -652,8 +561,8 @@
             if (appState.goals.length === 0) {
                 container.innerHTML = `
                     <div class="bg-white border border-[#DFE1E5] rounded-3xl p-8 text-center shadow-sm">
-                        <p class="text-slate-500 font-bold">수립된 마일스톤 목표가 없습니다.</p>
-                        <p class="text-xs text-slate-400 mt-2">우측 상단 [+ 목표 추가] 버튼을 클릭해 행동 규칙 설정을 시작해보세요!</p>
+                        <p class="text-slate-500 font-bold">수립된 90일 마일스톤 목표가 없습니다.</p>
+                        <p class="text-xs text-slate-400 mt-2">우측 상단 [+ 목표 추가] 버튼을 클릭해 3개월 목표 설정을 해보세요!</p>
                     </div>
                 `;
                 return;
@@ -661,8 +570,6 @@
 
             appState.goals.forEach((goal) => {
                 const subgoalsList = appState.subGoals.filter(sg => sg.goalId === goal.id);
-                const diffTime = goal.endDate - goal.startDate;
-                const totalGoalDays = Math.max(1, Math.round(diffTime / (1000 * 60 * 60 * 24)) + 1);
 
                 const card = document.createElement("div");
                 card.className = "bg-white border border-[#DFE1E5] rounded-2xl p-6 hover:border-slate-300 transition shadow-sm relative group overflow-hidden";
@@ -674,7 +581,7 @@
                         <div>
                             <div class="flex items-center space-x-2">
                                 <span class="text-xs font-bold px-2.5 py-0.5 rounded-full tracking-wide uppercase" style="color: ${goal.displayColor}; background-color: ${goal.displayColor}15">
-                                    Goal #${goal.id} (${totalGoalDays}일 프로젝트)
+                                    Goal #${goal.id}
                                 </span>
                                 <span class="text-[10px] text-[#616061]">
                                     ${new Date(goal.startDate).toLocaleDateString()} ~ ${new Date(goal.endDate).toLocaleDateString()}
@@ -699,7 +606,7 @@
                         <div class="flex justify-between items-center">
                             <span class="text-xs font-bold text-slate-700 block">✔️ ${selectedDate} 체크리스트</span>
                             <span class="text-[10px] text-slate-400 font-semibold">
-                                날짜별 실천 여부가 별도로 저장됩니다!
+                                날짜를 넘기면 날짜별 실천 여부가 다르게 저장됩니다!
                             </span>
                         </div>
                         
@@ -716,23 +623,23 @@
                         </div>
                     </div>
 
-                    <!-- Dynamic Scheduler Grass Grid - Styled exactly as visual Github contribution heatmap with column wrapping -->
-                    <div class="border-t border-[#DFE1E5] pt-5 mt-5 pl-2 overflow-x-auto custom-scrollbar">
+                    <!-- 90-Day Scheduler Grass Grid -->
+                    <div class="border-t border-[#DFE1E5] pt-5 mt-5 pl-2">
                         <div class="flex items-center justify-between mb-2">
-                            <span class="text-xs font-bold text-slate-700">🌱 ${totalGoalDays}일 잔디밭 성취 피드 (클릭시 해당 실천일로 이동)</span>
-                            <span class="text-[10px] text-slate-400">실천완수율이 높을수록 짙은 가든이 생성됩니다</span>
+                            <span class="text-xs font-bold text-slate-700">🌱 90일 잔디밭 성취 피드 (눌러서 해당 날짜로 바로가기)</span>
+                            <span class="text-[10px] text-slate-400">실천완수율이 높을수록 짙은 잔디가 심어집니다</span>
                         </div>
                         
-                        <div id="grass-grid-container-${goal.id}" class="max-w-max pb-1" style="display: grid; grid-template-rows: repeat(7, minmax(0, 1fr)); grid-auto-flow: column; gap: 3.5px;">
+                        <div class="grid grid-cols-[repeat(18,minmax(0,1fr))] gap-[3px] max-w-max" id="grass-grid-container-${goal.id}">
                             <!-- Grass cells calendar goes here -->
                         </div>
                         
                         <div class="flex items-center space-x-3 mt-2.5 text-[9px] text-[#616061] justify-end">
                             <span>0% (수행안함)</span>
-                            <div class="w-2.5 h-2.5 rounded bg-[#EBEDF0] border border-slate-100"></div>
-                            <div class="w-2.5 h-2.5 rounded" style="background-color: ${goal.displayColor}33"></div>
-                            <div class="w-2.5 h-2.5 rounded" style="background-color: ${goal.displayColor}77"></div>
-                            <div class="w-2.5 h-2.5 rounded" style="background-color: ${goal.displayColor}"></div>
+                            <div class="w-2.5 h-2.5 rounded-sm bg-[#EBEDF0] border border-slate-100"></div>
+                            <div class="w-2.5 h-2.5 rounded-sm" style="background-color: ${goal.displayColor}44"></div>
+                            <div class="w-2.5 h-2.5 rounded-sm" style="background-color: ${goal.displayColor}88"></div>
+                            <div class="w-2.5 h-2.5 rounded-sm" style="background-color: ${goal.displayColor}"></div>
                             <span>100% (전부완료)</span>
                         </div>
                     </div>
@@ -791,11 +698,8 @@
             const goalSubgoals = appState.subGoals.filter(sg => sg.goalId === goal.id);
             const totalSg = goalSubgoals.length;
 
-            const diffTime = goal.endDate - goal.startDate;
-            const durationDays = Math.max(1, Math.round(diffTime / (1000 * 60 * 60 * 24)) + 1);
-
-            // Render cells for Day 1 to Day durationDays
-            for (let i = 0; i < durationDays; i++) {
+            // Render cells for Day 1 to Day 90
+            for (let i = 0; i < 90; i++) {
                 const dayTime = goal.startDate + i * 24 * 60 * 60 * 1000;
                 const dateObj = new Date(dayTime);
                 const yyyy = dateObj.getFullYear();
@@ -819,11 +723,11 @@
                 if (totalSg === 0 || completionRate === 0) {
                      cell.style.backgroundColor = "#EBEDF0";
                 } else if (completionRate <= 0.4) {
-                     cell.style.backgroundColor = `${goal.displayColor}33`; // 1/3 opacity
+                     cell.style.backgroundColor = `${goal.displayColor}44`;
                 } else if (completionRate <= 0.8) {
-                     cell.style.backgroundColor = `${goal.displayColor}77`; // 2/3 opacity
+                     cell.style.backgroundColor = `${goal.displayColor}88`;
                 } else {
-                     cell.style.backgroundColor = goal.displayColor; // Solid theme color
+                     cell.style.backgroundColor = goal.displayColor;
                 }
 
                 // Tooltip info
@@ -928,30 +832,13 @@
                 return;
             }
 
-            // Determine dynamic duration in days matching Kotlin logic
-            let durationDays = 100; // Default
-            if (modalDurationDays === 'custom') {
-                const customInput = document.getElementById("customGoalDuration");
-                const customVal = parseInt(customInput.value, 10);
-                if (isNaN(customVal) || customVal < 7 || customVal > 365) {
-                    showToast("오류", "실천 설정 기간은 7일에서 365일 사이로 입력해주세요.", false);
-                    return;
-                }
-                durationDays = customVal;
-            } else {
-                durationDays = parseInt(modalDurationDays, 10) || 100;
-            }
-
-            const startDateMs = new Date(selectedDate).getTime();
-            const endDateMs = startDateMs + (durationDays - 1) * 24 * 60 * 60 * 1000; // Correct boundary alignment
-
             const newId = appState.goals.length > 0 ? Math.max(...appState.goals.map(g => g.id)) + 1 : 1;
             const newGoal = {
                 id: newId,
                 title: title,
                 description: desc || "해당 마일스톤에 대한 보충 설명이 비어 있습니다.",
-                startDate: startDateMs,
-                endDate: endDateMs,
+                startDate: new Date(selectedDate).getTime(),
+                endDate: new Date(selectedDate).getTime() + 90 * 24 * 60 * 60 * 1000,
                 displayColor: color,
                 iconName: icon
             };
@@ -960,11 +847,9 @@
             saveState();
             closeAddGoalModal();
 
-            // Clear fields and restore default button
+            // Clear fields
             document.getElementById("newGoalTitle").value = "";
             document.getElementById("newGoalDesc").value = "";
-            document.getElementById("customGoalDuration").value = "";
-            setModalDuration(100);
 
             updateUI();
             showToast("수립 완료", `[Goal #${newId}] 목표 실천 플랜이 무사히 생성 완료되었습니다!`, true);
@@ -981,6 +866,7 @@
             triggerDownload("goals_milestones.csv", csv, "text/csv");
         }
 
+        // Trigger safe client-side standard file downloader
         function downloadSubGoalsCsv() {
              let csv = "ID,연계 핵심목표 ID,지침 제목,지침 설명\n";
              appState.subGoals.forEach(sg => {
@@ -1085,16 +971,16 @@
         }
 
         function switchTab(tabId) {
-            const tabs = ["export-csv-tab", "export-json-tab", "import-json-tab", "share-guide-tab"];
+            const tabs = ["export-csv-tab", "export-json-tab", "import-json-tab"];
             tabs.forEach(t => {
                 const btn = document.getElementById(`btn-${t}`);
                 const content = document.getElementById(`content-${t}`);
                 if (t === tabId) {
                     btn.className = "flex-1 py-1.5 text-center text-xs font-semibold rounded-lg bg-[#2BAC76] text-white transition-all";
-                    if (content) content.classList.remove("hidden");
+                    content.classList.remove("hidden");
                 } else {
                     btn.className = "flex-1 py-1.5 text-center text-xs font-semibold rounded-lg text-[#616061] hover:text-[#1D1C1D] transition-all";
-                    if (content) content.classList.add("hidden");
+                    content.classList.add("hidden");
                 }
             });
         }

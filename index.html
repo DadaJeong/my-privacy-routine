@@ -799,7 +799,63 @@ function updateUserPayload(sheet, userId, payload) {
       
       document.getElementById('password-input').value = '';
       document.getElementById('main-screen').classList.add('hidden');
-      d    // Pull database updates from Google Cloud spreadsheet endpoints
+      document.getElementById('auth-screen').classList.remove('hidden');
+      
+      showToast('안전하게 로그아웃 되었습니다.', 'success');
+    }
+
+    // Core Load Backups from client state
+    function loadLocalStorageBackup() {
+      const storageKey = `_pm_local_payload_${currentUserId}`;
+      const savedPayload = localStorage.getItem(storageKey);
+      
+      if (savedPayload) {
+        try {
+          // Decrypt state using AES password securely
+          const decResult = decryptText(savedPayload, currentPassword);
+          if (decResult) {
+            appState = JSON.parse(decResult);
+          }
+        } catch (e) {
+          console.error("Local recovery decryption error:", e);
+          showToast("로컬 데이타를 열었으나 암호가 다른 것 같습니다.", "error");
+        }
+      } else {
+        appState = { goals: [] };
+      }
+    }
+
+    // Fast save to browser local system as fallbacks
+    function saveToLocalStorageBackup() {
+      if (!currentUserId) return;
+      const storageKey = `_pm_local_payload_${currentUserId}`;
+      const encryptedState = encryptText(JSON.stringify(appState), currentPassword);
+      localStorage.setItem(storageKey, encryptedState);
+    }
+
+    // AES-256 Symmetric encryption wrapper
+    function encryptText(plainText, key) {
+      try {
+        return CryptoJS.AES.encrypt(plainText, key).toString();
+      } catch (err) {
+        console.error("Encryption Failure", err);
+        return "";
+      }
+    }
+
+    // AES-256 Symmetric decryption wrapper
+    function decryptText(cipherText, key) {
+      if (!cipherText) return "";
+      try {
+        const bytes = CryptoJS.AES.decrypt(cipherText, key);
+        return bytes.toString(CryptoJS.enc.Utf8);
+      } catch (err) {
+        console.error("Decryption Failure", err);
+        return "";
+      }
+    }
+
+    // Pull database updates from Google Cloud spreadsheet endpoints
     async function pullFromCloudGSheets() {
       if (!SCRIPT_URL && !hasServerScriptUrl) return;
       toggleSyncBanner(true, '서버에서 최신 데이터 받아오는 중...');
